@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,11 +31,11 @@ import www.mynumfacts.com.numberfacts.R;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String STRING_REQUEST_URL = "http://numbersapi.com/42";
+    private static final String STRING_REQUEST_URL = "http://numbersapi.com/random/";
     ProgressDialog progressDialog;
     private TextView mTextMessage;
     private Spinner spinner;
-    private String category;
+    private String category = "trivia";
     private Button submit;
     private TextView outputTextView;
     private TextView mTextFact;
@@ -87,22 +89,39 @@ public class MainActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                volleyStringRequst(STRING_REQUEST_URL);
+                String queryAppendedURL = STRING_REQUEST_URL + category;
+                volleyStringRequst(queryAppendedURL);
             }
         });
 
     }
 
-
     public void addListenerOnSpinnerItemSelection() {
 
         spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos,
+                                       long id) {
+                Toast.makeText(parent.getContext(),
+                        "OnItemSelectedListener RISHI : " + parent.getItemAtPosition(pos).toString(),
+                        Toast.LENGTH_SHORT).show();
+                category = parent.getItemAtPosition(pos).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+
+        });
     }
 
     public void volleyStringRequst(String url) {
 
-        String REQUEST_TAG = "com.androidtutorialpoint.volleyStringRequest";
+        String REQUEST_TAG = "com.mynumfacts.www";
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 

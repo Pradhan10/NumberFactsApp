@@ -2,7 +2,6 @@
     <string name="app_name">NumberFacts</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="navigation_screen1">Random Fact Screen</string>
     <string name="navigation_screen2">Quest Facts Screen</string>
 </resources>
