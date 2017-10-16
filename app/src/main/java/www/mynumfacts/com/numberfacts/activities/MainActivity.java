@@ -14,9 +14,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,16 +30,25 @@ import www.mynumfacts.com.numberfacts.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*Final variables*/
     private static final String TAG = "MainActivity";
-    private static final String STRING_REQUEST_URL = "http://numbersapi.com/random/";
+    private static final String STRING_RANDOM_REQUEST_URL = "http://numbersapi.com/random/";
+    private static final String STRING_QUEST_REQUEST_URL = "http://numbersapi.com/";
+
+    /*UI ELements*/
     ProgressDialog progressDialog;
-    private TextView mTextMessage;
     private Spinner spinner;
-    private String category = "trivia";
     private Button submit;
     private TextView outputTextView;
     private TextView mTextFact;
     private View showDialogView;
+    private TextView mtextview_number;
+    private EditText meditText_number;
+    /*Default params*/
+    private String category = "trivia";
+    private String mQuery_param_number = "10";
+    private String mQuery_param_category = "date";
+    private boolean randomRequest = true;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -47,10 +56,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    randomRequest = true;
+                    mtextview_number.setVisibility(View.GONE);
+                    meditText_number.setVisibility(View.GONE);
                     return true;
+
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    randomRequest = false;
+                    mtextview_number.setVisibility(View.VISIBLE);
+                    meditText_number.setVisibility(View.VISIBLE);
                     return true;
 
             }
@@ -63,18 +77,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         progressDialog = new ProgressDialog(this);
         submit = (Button) findViewById(R.id.button_submit);
         mTextFact = (TextView) findViewById(R.id.textView_fact);
-
-
-
-
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mtextview_number = (TextView) findViewById(R.id.textView_number);
+        meditText_number = (EditText) findViewById(R.id.editText_number);
+        spinner = (Spinner) findViewById(R.id.spinner);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        spinner = (Spinner) findViewById(R.id.spinner);
 
 
         List<String> list = new ArrayList<String>();
@@ -89,8 +99,20 @@ public class MainActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String queryAppendedURL = STRING_REQUEST_URL + category;
-                volleyStringRequst(queryAppendedURL);
+
+                if (randomRequest == true) {
+                    String queryAppendedURL = STRING_RANDOM_REQUEST_URL + category;
+                    volleyStringRequst(queryAppendedURL);
+
+                } else {
+                    mQuery_param_category = spinner.getSelectedItem().toString();
+                    mQuery_param_number = meditText_number.getText().toString();
+                    String queryAppendedURL = STRING_QUEST_REQUEST_URL + mQuery_param_number + "/" + mQuery_param_category;
+                    volleyStringRequst(queryAppendedURL);
+
+                }
+
+
             }
         });
 
@@ -98,14 +120,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListenerOnSpinnerItemSelection() {
 
-        spinner = (Spinner) findViewById(R.id.spinner);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos,
                                        long id) {
-                Toast.makeText(parent.getContext(),
-                        "OnItemSelectedListener RISHI : " + parent.getItemAtPosition(pos).toString(),
-                        Toast.LENGTH_SHORT).show();
+                /*Used for debugging.*/
+//                Toast.makeText(parent.getContext(),
+//                        "OnItemSelectedListener RISHI : " + parent.getItemAtPosition(pos).toString(),
+//                        Toast.LENGTH_SHORT).show();
                 category = parent.getItemAtPosition(pos).toString();
             }
 
@@ -130,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.d(TAG, response.toString());
-
-
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
                 showDialogView = li.inflate(R.layout.show_dialog, null);
                 outputTextView = showDialogView.findViewById(R.id.text_view_dialog);

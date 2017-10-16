@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">NumberFacts</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="app_name">Number Facts</string>
     <string name="navigation_screen1">Random Fact Screen</string>
     <string name="navigation_screen2">Quest Facts Screen</string>
+    <string name="textview_category">Please select category.</string>
+    <string name="textview_number">Please enter a number</string>
+    <string name="textview_fact">10 is the number of hydrogen atoms in butane, a hydrocarbon.</string>
+    <string name="default_10">Default 10</string>
+    <string name="submit">submit</string>
 </resources>
