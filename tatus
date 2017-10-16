@@ -1,0 +1,14 @@
+[33m96ffac4[m HEAD@{0}: checkout: moving from QuestScreen to 96ffac4c0e0e2d589cce9121bc9d3b223b87b97f
+[33m96ffac4[m HEAD@{1}: checkout: moving from master to QuestScreen
+[33m96ffac4[m HEAD@{2}: merge QuestScreen: Fast-forward (no commit created; -m option ignored)
+[33m6d150b7[m HEAD@{3}: checkout: moving from QuestScreen to master
+[33m96ffac4[m HEAD@{4}: checkout: moving from a243b3fbf7b5bc63eb6b67aefb7148f73930428c to QuestScreen
+[33ma243b3f[m HEAD@{5}: commit: Features coded:
+[33m96ffac4[m HEAD@{6}: checkout: moving from QuestScreen to QuestScreen^0
+[33m96ffac4[m HEAD@{7}: checkout: moving from Feature to QuestScreen
+[33m96ffac4[m HEAD@{8}: commit: Features coded:
+[33m36e565c[m HEAD@{9}: commit: Http request and response working correctly, facts are retrieved and displayed properly.
+[33m6d150b7[m HEAD@{10}: checkout: moving from master to Feature
+[33m6d150b7[m HEAD@{11}: checkout: moving from Feature to master
+[33m6d150b7[m HEAD@{12}: checkout: moving from master to Feature
+[33m6d150b7[m HEAD@{13}: commit (initial): Working framework
